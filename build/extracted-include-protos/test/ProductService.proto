@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "me.anmolverma.product";
+option java_outer_classname = "Products";
+option java_multiple_files = true;
+
+message ProductFetchRequest {
+  int32 category = 1;
+}
+
+message ProductsResponse {
+  int32 code = 1;
+  string message = 2;
+  repeated Product products = 3;
+}
+
+message Product {
+  int32 id = 1;
+  string name = 2;
+  repeated string imageUrls = 3;
+  Category category = 4;
+}
+
+enum Category{
+  CLOTHES = 0;
+  ELECTRONICS = 1;
+  HOME_FURNISHING = 2;
+}
+
+service ProductService {
+  rpc fetchProducts(ProductFetchRequest) returns (ProductsResponse);
+}
