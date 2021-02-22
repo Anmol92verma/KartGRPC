@@ -21,7 +21,7 @@ message Product {
   Category category = 4;
 }
 
-enum Category{
+enum Category{ // defined enum just for learning purposes, ideally should be from db.
   CLOTHES = 0;
   ELECTRONICS = 1;
   HOME_FURNISHING = 2;
