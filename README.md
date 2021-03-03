@@ -12,9 +12,29 @@ In Memory Data for the following
 2. Categories
 3. Users - TODO
 
+
+
 Authentication
 
-1. Setup SSL/TLS mechanism - TODO
+1. Setup SSL/TLS mechanism
+
+![Alt text](generatecert.png?raw=true "Generate local certs")
+
+        How to generate local certs ? Keep it simple!
+
+        // I recommend using mkcert to generate local certificates.
+        
+        JUST RUN
+
+        $ mkcert -key-file key.pem -cert-file cert.pem localhost
+
+        The certificate is at "cert.pem" and the key at "key.pem" ✅
+
+        $ mkcert -CAROOT
+
+
+
 2. JWT auth - In Progress
+
 3. ....
    
