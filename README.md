@@ -18,21 +18,10 @@ Authentication
 
 1. Setup SSL/TLS mechanism
 
-![Alt text](generatecert.png?raw=true "Generate local certs")
-
-        How to generate local certs ? Keep it simple!
-
-        // I recommend using mkcert to generate local certificates.
-        
-        JUST RUN
-
-        $ mkcert -key-file key.pem -cert-file cert.pem localhost
-
-        The certificate is at "cert.pem" and the key at "key.pem" ✅
-
-        $ mkcert -CAROOT
-
-
+Steps:
+Cd into ssl dir: cd src/ssl/
+Make sh executable: chmod +x instructions.sh
+Execute to generate all files: ./instructions.sh
 
 2. JWT auth - In Progress
 

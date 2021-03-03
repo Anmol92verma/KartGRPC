@@ -4,13 +4,23 @@ import com.google.protobuf.Empty
 import io.grpc.CallCredentials
 import io.grpc.ManagedChannel
 import me.anmolverma.product.ProductServiceGrpc.ProductServiceBlockingStub
-import io.grpc.ManagedChannelBuilder
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder
+import io.grpc.netty.shaded.io.netty.handler.ssl.SslContext
+import me.anmolverma.MainGrpcServer.CERT_CHAIN_FILE_PATH
+import me.anmolverma.MainGrpcServer.PRIVATE_KEY_FILE_PATH
 import me.anmolverma.product.ProductFetchRequest
 import kotlin.Throws
 import java.lang.InterruptedException
 import java.util.concurrent.TimeUnit
 import me.anmolverma.product.ProductServiceGrpc
+import java.io.File
 import java.util.logging.Logger
+import io.grpc.netty.shaded.io.netty.handler.ssl.ClientAuth
+
+import io.grpc.netty.shaded.io.netty.handler.ssl.SslContextBuilder
+import me.anmolverma.MainGrpcClient.buildClientSslContext
+
 
 /**
  * An authenticating client that requests a product from the [MainGrpcServer].
@@ -20,19 +30,18 @@ class AllServicesAllMethods internal constructor(
     private val channel: ManagedChannel
 ) {
     private val productServiceBlockingStub: ProductServiceBlockingStub = ProductServiceGrpc.newBlockingStub(channel)
+
     /**
      * Construct client for accessing GreeterGrpc server.
      */
+
     internal constructor(callCredentials: CallCredentials?, host: String?, port: Int) : this(
         callCredentials,
-        ManagedChannelBuilder
-            .forAddress(host, port) // Channels are secure by default (via SSL/TLS). For this example we disable TLS
-            // to avoid needing certificates, but it is recommended to use a secure channel
-            // while passing credentials.
-            .usePlaintext()
+        NettyChannelBuilder.forAddress(host, port)
+            .sslContext(buildClientSslContext())
             .build()
-    ) {
-    }
+    )
+
 
     @Throws(InterruptedException::class)
     fun shutdown() {
@@ -74,3 +83,4 @@ class AllServicesAllMethods internal constructor(
     }
 
 }
+

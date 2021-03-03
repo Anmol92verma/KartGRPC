@@ -5,6 +5,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+/src/ssl
 env.list
 ### STS ###
 .apt_generated

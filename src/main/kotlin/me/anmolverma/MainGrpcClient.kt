@@ -1,7 +1,10 @@
 package me.anmolverma
 
 import io.grpc.CallCredentials
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts
+import io.grpc.netty.shaded.io.netty.handler.ssl.SslContext
 import me.anmolverma.auth.JwtCredential
+import java.io.File
 import java.lang.Exception
 import java.util.logging.Logger
 
@@ -26,5 +29,9 @@ object MainGrpcClient {
         } finally {
             client.shutdown()
         }
+    }
+
+    fun buildClientSslContext(): SslContext {
+        return GrpcSslContexts.forClient().trustManager(File("./src/ssl/ca.crt")).build()
     }
 }
