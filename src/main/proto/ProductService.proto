@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
 
 option java_package = "me.anmolverma.product";
 option java_outer_classname = "Products";
@@ -14,6 +15,12 @@ message ProductsResponse {
   repeated Product products = 3;
 }
 
+message CategoryResponse{
+  int32 code = 1;
+  string message = 2;
+  repeated Category categories = 3;
+}
+
 message Product {
   int32 id = 1;
   string name = 2;
@@ -21,12 +28,12 @@ message Product {
   Category category = 4;
 }
 
-enum Category{ // defined enum just for learning purposes, ideally should be from db.
-  CLOTHES = 0;
-  ELECTRONICS = 1;
-  HOME_FURNISHING = 2;
+message Category {
+  int32 id = 1;
+  string name = 2;
 }
 
 service ProductService {
   rpc fetchProducts(ProductFetchRequest) returns (ProductsResponse);
+  rpc fetchCategories(google.protobuf.Empty) returns (CategoryResponse);
 }

@@ -4,7 +4,7 @@ import com.google.protobuf.gradle.*
 plugins {
     application
     kotlin("jvm") version "1.4.30"
-    id("com.google.protobuf") version "0.8.14"
+    id("com.google.protobuf") version "0.8.15"
 }
 
 
@@ -19,15 +19,15 @@ sourceSets.main {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.10.1"
+        artifact = "com.google.protobuf:protoc:3.12.0"
     }
 
     plugins {
         id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:1.32.1"
+            artifact = "io.grpc:protoc-gen-grpc-java:1.36.0"
         }
         id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:0.1.5"
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:1.0.0:jdk7@jar"
         }
     }
 
@@ -54,10 +54,10 @@ repositories {
 }
 
 dependencies {
-    implementation("io.grpc:grpc-netty-shaded:1.34.1")
-    implementation("io.grpc:grpc-protobuf:1.34.1")
+    implementation("io.grpc:grpc-netty-shaded:1.36.0")
+    implementation("io.grpc:grpc-protobuf:1.36.0")
     implementation("io.grpc:grpc-kotlin-stub:1.0.0")
-    implementation("com.google.protobuf:protobuf-java:3.8.0")
+    implementation("com.google.protobuf:protobuf-java:3.15.3")
 
     implementation("com.google.guava:guava:30.1-jre")
     implementation("javax.annotation:javax.annotation-api:1.3.2")

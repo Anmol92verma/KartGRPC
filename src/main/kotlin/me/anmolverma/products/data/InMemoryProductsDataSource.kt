@@ -1,20 +1,20 @@
 package me.anmolverma.products.data
 
+import me.anmolverma.categories.asCategory
+import me.anmolverma.categories.data.InMemoryCategoryDataSource
 import me.anmolverma.product.Category
 import me.anmolverma.products.KartProduct
-import kotlin.random.Random
 
-class InMemoryProductsDataSource : ProductsDataSource {
+class InMemoryProductsDataSource : AsyncDataSource<Category, List<KartProduct>> {
     private val products = mutableListOf<KartProduct>()
+    private val categories = InMemoryCategoryDataSource().fetch(null);
 
     init {
-        for (index in 1..100) {
-            products.add(KartProduct(index, "Name $index", randomCategory(), getImages()))
+        categories.forEach { category ->
+            for (index in 1..10) {
+                products.add(KartProduct(index, "Name $index", category.asCategory(), getImages()))
+            }
         }
-    }
-
-    private fun randomCategory(): Int {
-        return Category.values()[(0..Category.values().size.minus(1)).random()].ordinal
     }
 
     private fun getImages(): List<String> {
@@ -27,10 +27,7 @@ class InMemoryProductsDataSource : ProductsDataSource {
     }
 
 
-    override suspend fun fetch(category: Category): List<KartProduct> {
-        if(category == Category.UNRECOGNIZED){
-            return emptyList()
-        }
-        return products.filter { it.category == category.number }
+    override suspend fun fetchAsync(category: Category?): List<KartProduct> {
+        return products.filter { it.category == category }
     }
 }

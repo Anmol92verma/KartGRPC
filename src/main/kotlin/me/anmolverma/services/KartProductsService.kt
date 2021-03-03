@@ -1,15 +1,29 @@
 package me.anmolverma.services
 
-import me.anmolverma.product.ProductFetchRequest
-import me.anmolverma.product.ProductServiceGrpcKt
-import me.anmolverma.product.ProductsResponse
+import com.google.protobuf.Empty
+import me.anmolverma.categories.KartCategory
+import me.anmolverma.categories.asCategory
+import me.anmolverma.product.*
+import me.anmolverma.products.KartProduct
 import me.anmolverma.products.asProducts
-import me.anmolverma.products.data.ProductsDataSource
+import me.anmolverma.products.data.AsyncDataSource
+import me.anmolverma.products.data.DataSource
 
-class KartProductsService(private val dataSource: ProductsDataSource) :
+class KartProductsService(
+    private val productsDataSource: AsyncDataSource<Category, List<KartProduct>>,
+    private val categoryDataSource: DataSource<Unit, List<KartCategory>>
+) :
     ProductServiceGrpcKt.ProductServiceCoroutineImplBase() {
+
+    override suspend fun fetchCategories(request: Empty): CategoryResponse {
+        val categories = categoryDataSource.fetch(null)
+        return CategoryResponse.newBuilder()
+            .setCode(200).setMessage("Categories on board!")
+            .addAllCategories(categories.map { it.asCategory() }).build()
+    }
+
     override suspend fun fetchProducts(request: ProductFetchRequest): ProductsResponse {
-        val kartProducts = dataSource.fetch(category = request.category)
+        val kartProducts = productsDataSource.fetchAsync(category = request.category)
         return if (kartProducts.isEmpty()) {
             ProductsResponse.newBuilder()
                 .setCode(201)
