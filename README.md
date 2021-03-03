@@ -20,8 +20,11 @@ Authentication
 
 Steps:
 Cd into ssl dir: cd src/ssl/
+
 Make sh executable: chmod +x instructions.sh
+
 Execute to generate all files: ./instructions.sh
+
 
 2. JWT auth - In Progress
 
