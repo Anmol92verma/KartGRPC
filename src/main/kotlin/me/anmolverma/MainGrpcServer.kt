@@ -1,6 +1,7 @@
 package me.anmolverma
 
 import io.grpc.ServerBuilder
+import me.anmolverma.auth.JWTInterceptor
 import me.anmolverma.categories.data.InMemoryCategoryDataSource
 import me.anmolverma.products.data.InMemoryProductsDataSource
 import me.anmolverma.services.KartProductsService
@@ -16,12 +17,12 @@ object MainGrpcServer {
                         InMemoryProductsDataSource(),
                         InMemoryCategoryDataSource()
                     )
-                )
+                ).intercept(JWTInterceptor())
                 .build()
 
             server.start()
-            server.awaitTermination()
             println("running on ${server.port}")
+            server.awaitTermination()
         } catch (ex: Exception) {
             ex.printStackTrace()
         }

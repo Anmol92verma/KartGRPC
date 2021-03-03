@@ -58,7 +58,7 @@ dependencies {
     implementation("io.grpc:grpc-protobuf:1.36.0")
     implementation("io.grpc:grpc-kotlin-stub:1.0.0")
     implementation("com.google.protobuf:protobuf-java:3.15.3")
-
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("com.google.guava:guava:30.1-jre")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
 

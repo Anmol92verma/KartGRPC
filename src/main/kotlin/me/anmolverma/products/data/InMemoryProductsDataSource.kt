@@ -28,6 +28,10 @@ class InMemoryProductsDataSource : AsyncDataSource<Category, List<KartProduct>> 
 
 
     override suspend fun fetchAsync(category: Category?): List<KartProduct> {
-        return products.filter { it.category == category }
+        return if (category != null && category.id != 0) {
+            products.filter { it.category == category }
+        } else {
+            products
+        }
     }
 }
